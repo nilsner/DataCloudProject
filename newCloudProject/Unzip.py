@@ -1,3 +1,5 @@
+import os
+
 import zipfile
 import csv
 import pika
@@ -8,16 +10,20 @@ class UnzipComponent:
 
     def run(self):
         while True:
-            zip_file_path = "file_path"
+            #zip_file_path = "file_path"
 
-            # Extract the TSV file from the zip file
-            with zipfile.ZipFile(zip_file_path, "r") as zip_file:
-                zip_file_member = zip_file.namelist()[0]
-                with zip_file.open(zip_file_member) as zip_file_member:
-                    tsv_data = zip_file_member.read()
+            file_path = "/path/to/your/file.zip"  # Replace with the actual file path on the shared file system
+            outpgit ut_dir = "/path/to/output/directory"
+            # Assuming file_path is a valid path to a .zip file on a shared file system
+            with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                for filename in zip_ref.namelist():
+                    if filename.endswith('.tsv'):
+                        destination_path = os.path.join(output_dir, filename)
+                        zip_ref.extract(filename, output_dir)
+                        print(f" [x] Extracted {filename} to {destination_path}")
 
             # Publish the UnzipTsv file to the output queue
-            self.output_queue.send(tsv_data)
+            self.output_queue.send(destination_path)
 
 if __name__ == "__main__":
     # Connect to the message queue
@@ -25,7 +31,7 @@ if __name__ == "__main__":
     channel = connection.channel()
 
     # Declare the input and output queues
-    output_queue = channel.queue_declare(queue="unzip_output_queue")
+    output_queue = channel.queue_declare(queue="unzip_tsv_queue")
 
     # Create the Unzip component
     unzip_component = UnzipComponent(output_queue)

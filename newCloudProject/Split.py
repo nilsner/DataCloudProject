@@ -19,9 +19,14 @@ class SplitComponent:
             # Calculate the number of files to split the CSV file into
             num_files = csv_file_size // self.max_rows_per_file + 1
 
+            # Create a new directory to store the split CSV files
+            output_directory = "/path/to/your/split_files/directory"
+            if not os.path.exists(output_directory):
+                os.makedirs(output_directory)
+
             # Split the CSV file into smaller pieces
             for i in range(num_files):
-                output_csv_file_path = f"output_{i}.csv"
+                output_csv_file_path = os.path.join(output_directory,f"output_{i}.csv")
                 with open(output_csv_file_path, "w") as output_csv_file:
                     csv_writer = csv.writer(output_csv_file, delimiter=",")
                     with open(csv_file_path, "r") as input_csv_file:
@@ -30,7 +35,7 @@ class SplitComponent:
                             csv_writer.writerow(row)
 
                 # Publish the output CSV file to the message queue
-                self.output_queue.send(output_csv_file_path)
+                self.output_queue.send(output_directory)
 
 if __name__ == "__main__":
     # Connect to the message queue
@@ -38,8 +43,8 @@ if __name__ == "__main__":
     channel = connection.channel()
 
     # Declare the input and output queues
-    input_queue = channel.queue_declare(queue="split_input_queue")
-    output_queue = channel.queue_declare(queue="split_output_queue")
+    input_queue = channel.queue_declare(queue="csv_queue")
+    output_queue = channel.queue_declare(queue="split_csv_queue")
 
     # Create the Split component
     split_component = SplitComponent(input_queue, output_queue, max_rows_per_file=100000) # 100,000 rows per file

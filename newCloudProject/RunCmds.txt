@@ -1,0 +1,5 @@
+# To start and run the program, run the following commands in the terminal:
+docker-compose up
+
+# To stop the program, run the following command in the terminal:
+docker-compose down

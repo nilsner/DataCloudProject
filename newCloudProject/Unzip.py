@@ -12,8 +12,8 @@ class UnzipComponent:
         while True:
             #zip_file_path = "file_path"
 
-            file_path = "/path/to/your/file.zip"  # Replace with the actual file path on the shared file system
-            outpgit ut_dir = "/path/to/output/directory"
+            file_path = "/path/to/data.zip"  # Replace with the actual file path on the shared file system
+            output_dir = "/path/to/output/directory"
             # Assuming file_path is a valid path to a .zip file on a shared file system
             with zipfile.ZipFile(file_path, 'r') as zip_ref:
                 for filename in zip_ref.namelist():

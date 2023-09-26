@@ -1,0 +1,11 @@
+time in hours
+N-Nils, K-Karthika
+
+Task1:
+background learning: N-3, K-0.5
+22 sept (implement MQ): N-1.5 , K-1.5
+26 sept (implement containers and docker): N-1 , K-1
+
+Task2:
+26 sept (learn Arno): N-1, K-1
+(implement Arno)

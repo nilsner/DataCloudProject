@@ -8,5 +8,6 @@ background learning: N-3, K-0.5
 
 Task2:
 26 sept (learn Arno): N-1, K-1
-(implement Arno)
-g
+
+29 sept (implement Arno): N-1, K-1
+29 sept (Task 3): N-5min, K-5min

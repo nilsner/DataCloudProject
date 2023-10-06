@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: split-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: split
+  template:
+    metadata:
+      labels:
+        app: split
+    spec:
+      containers:
+      - name: split
+        image: my-username/split:latest
+        env:
+        - name: INPUT_QUEUE
+          value: csv_queue
+        - name: OUTPUT_QUEUE
+          value: split_csv_queue
+        - name: MAX_ROWS_PER_FILE
+          value: "100000" # 100,000 rows per file

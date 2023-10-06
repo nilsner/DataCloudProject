@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-container-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-container-app
+  template:
+    metadata:
+      labels:
+        app: docker-container-app
+    spec:
+      containers:
+        - name: docker-container-app
+          image: docker-container-app:latest  # Replace with your actual Docker image and tag
+          ports:
+            - containerPort: 8000

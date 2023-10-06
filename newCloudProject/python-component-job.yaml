@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: python-component-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: python-component
+          image: python-component:latest  # Replace with your actual Python component image and tag
+          command: ["python"]
+          args:
+            - "Unzip.py"
+      restartPolicy: Never
+  backoffLimit: 1

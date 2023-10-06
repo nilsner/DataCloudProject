@@ -25,8 +25,8 @@ if __name__ == "__main__":
     channel = connection.channel()
 
     # Declare the input and output queues
-    input_queue = channel.queue_declare(queue="transform_input_queue")
-    output_queue = channel.queue_declare(queue="transform_output_queue")
+    input_queue = channel.queue_declare(queue="split_csv_queue")
+    output_queue = channel.queue_declare(queue="transform_queue")
 
     # Create the Transform component
     transform_component = TransformComponent(input_queue, output_queue, grafterizer_executable_path="/path/to/grafterizer/executable")

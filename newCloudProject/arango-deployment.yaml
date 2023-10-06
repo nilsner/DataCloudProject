@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arango-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arango
+  template:
+    metadata:
+      labels:
+        app: arango
+    spec:
+      containers:
+      - name: arango
+        image: my-username/arango:latest
+        env:
+        - name: INPUT_QUEUE
+          value: transform_queue
+        - name: DATABASE_NAME
+          value: my_database
+        - name: COLLECTION_NAME
+          value: my_collection
+        - name: GRAFTERIZER_TRANSFORMATION_JSON_PATH
+          value: "/path/to/grafterizer/transformation.json"

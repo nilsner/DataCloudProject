@@ -17,7 +17,7 @@ class ArangoComponent:
     def run(self):
         while True:
             message = self.input_queue.receive()
-            csv_file_path = message["file_path"]
+            csv_file_path = message["output_csv_file_path"]
 
             # Load the Grafterizer transformation JSON
             with open(self.grafterizer_transformation_json_path, "r") as f:
@@ -29,10 +29,12 @@ class ArangoComponent:
                     # Split the CSV line into fields
                     fields = line.strip().split(",")
 
-                    # Create an ArangoDB document
+                    # Create an ArangoDB documentg
                     document = {}
                     for i in range(len(fields)):
                         document[transformation_json["fields"][i]] = fields[i]
+
+                    print("\n ArangoDB document created \n")
 
                     # Insert the document into ArangoDB
                     self.collection.insert(document)
@@ -43,7 +45,7 @@ if __name__ == "__main__":
     channel = connection.channel()
 
     # Declare the input queue
-    input_queue = channel.queue_declare(queue="arango_input_queue")
+    input_queue = channel.queue_declare(queue="transform_queue")
 
     # Create the Arango component
     arango_component = ArangoComponent(input_queue, database_name="my_database", collection_name="my_collection", grafterizer_transformation_json_path="/path/to/grafterizer/transformation.json")

@@ -1,0 +1,22 @@
+#This is a comment
+
+# To start and run the program, run the following commands in the terminal:
+#This command will read the docker-compose.yml file in the current directory
+ #and start all the services defined in it.
+ #The logs from all the containers will be streamed to the terminal.
+docker-compose up
+
+# To start services in detached mode (run containers in the background)
+docker-compose up -d
+
+# To stop the program, run the following command in the terminal:
+docker-compose down
+
+#If you modify the Dockerfile, rebuild all services
+docker-compose build
+
+# To view logs for running services
+docker-compose logs
+
+# To check the status of all services
+docker-compose ps

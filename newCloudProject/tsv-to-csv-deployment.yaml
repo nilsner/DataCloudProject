@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsv-to-csv-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tsv-to-csv
+  template:
+    metadata:
+      labels:
+        app: tsv-to-csv
+    spec:
+      containers:
+      - name: tsv-to-csv
+        image: my-username/tsv-to-csv:latest
+        env:
+        - name: INPUT_QUEUE
+          value: unzip_tsv_queue
+        - name: OUTPUT_QUEUE
+          value: csv_queue
